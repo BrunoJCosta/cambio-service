@@ -1,0 +1,28 @@
+server:
+  port: ${PORT}
+
+spring:
+  application:
+    name: cambio-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5003/cambio_server
+    username: postgres
+    password: postgres
+
+  flyway:
+    url: jdbc:postgresql://localhost:5003/cambio_server
+    schemas: cambio
+    user: postgres
+    password: postgres
+
+  sql:
+    init:
+      mode: always
+      encoding: utf-8
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
