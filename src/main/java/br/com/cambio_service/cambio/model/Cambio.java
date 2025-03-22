@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @AllArgsConstructor
@@ -14,7 +15,7 @@ import java.math.BigDecimal;
 @Setter
 @Entity
 @Table(name = "cambio", schema = "cambio")
-public class Cambio {
+public class Cambio implements Serializable {
 
     @Id
     @Column(name = "id")
