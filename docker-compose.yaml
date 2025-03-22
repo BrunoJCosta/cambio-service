@@ -17,3 +17,44 @@ services:
       - "5003:5432"
     networks:
       - ms
+
+  back_1:
+    build:
+      context: .
+    container_name: cambio_01
+    image: img_cambio_java
+    ports:
+      - "8001:8000"
+    expose:
+      - 8001
+    environment:
+      DATA_BASE: db_cambio
+      PORT_DB: 5432
+      PORT: 8001
+      HOST_EUREKA: eureka
+
+    networks:
+      - ms
+    depends_on:
+      db:
+        condition: service_started
+
+  back_2:
+    build:
+      context: .
+    container_name: cambio_02
+    image: img_cambio_java
+    ports:
+      - "8002:8000"
+    expose:
+      - 8002
+    environment:
+      DATA_BASE: db_cambio
+      PORT_DB: 5432
+      PORT: 8001
+      HOST_EUREKA: eureka
+    networks:
+      - ms
+    depends_on:
+      db:
+        condition: service_started

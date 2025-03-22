@@ -1,17 +1,22 @@
 server:
   port: ${PORT}
 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${HOST_EUREKA}:8761/eureka
+
 spring:
   application:
     name: cambio-service
 
   datasource:
-    url: jdbc:postgresql://localhost:5003/cambio_server
+    url: jdbc:postgresql://${DATA_BASE}:${PORT_DB}/cambio_server
     username: postgres
     password: postgres
 
   flyway:
-    url: jdbc:postgresql://localhost:5003/cambio_server
+    url: jdbc:postgresql://${DATA_BASE}:${PORT_DB}/cambio_server
     schemas: cambio
     user: postgres
     password: postgres
@@ -23,6 +28,5 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     show-sql: true
-
