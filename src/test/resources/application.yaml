@@ -1,6 +1,10 @@
 server:
   port: 3468
 
+eureka:
+  client:
+    enabled: false
+
 spring:
   application:
     name: cambio-server-test
@@ -9,7 +13,6 @@ spring:
     url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     username: sa
     password:
-
   flyway:
     url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     user: sa
@@ -21,6 +24,14 @@ spring:
       encoding: utf-8
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     show-sql: true
     open-in-view: false
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: update
+
+  batch:
+    jdbc:
+      initialize-schema: always
