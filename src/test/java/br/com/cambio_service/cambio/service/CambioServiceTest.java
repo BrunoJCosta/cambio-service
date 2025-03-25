@@ -3,19 +3,15 @@ package br.com.cambio_service.cambio.service;
 import br.com.cambio_service.cambio.dto.CambioDTO;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Bean;
-import org.springframework.test.context.event.annotation.BeforeTestClass;
 
 import java.math.BigDecimal;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 @SpringBootTest
@@ -26,11 +22,12 @@ class CambioServiceTest {
 
     @ParameterizedTest
     @MethodSource
+    @DisplayName("find to from and to for conversion")
     void findByFromAndTo(BigDecimal amount, String from, String to, BigDecimal expected) {
         CambioDTO dto = cambioService.findByFromAndTo(amount, from, to);
-        Assertions.assertNotNull(dto);
+        Assertions.assertNotNull(dto, "return the cambio Service is null");
 
-        Assertions.assertEquals(expected, dto.getConvertValue());
+        Assertions.assertEquals(expected, dto.getConvertValue(), "The conversion is with value wrong");
     }
 
     private static Stream<Arguments> findByFromAndTo() {
