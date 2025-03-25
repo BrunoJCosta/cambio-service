@@ -1,5 +1,6 @@
 package br.com.cambio_service.cambio.model;
 
+import br.com.cambio_service.cambio.dto.CambioDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,9 +31,12 @@ public class Cambio implements Serializable {
     @Column(name = "conversion_factor")
     private BigDecimal convertFactor;
 
-    @Transient
-    private BigDecimal convertValue;
+    public CambioDTO dto() {
+        CambioDTO dto = new CambioDTO();
+        dto.setFrom(this.from);
+        dto.setTo(this.to);
+        dto.setConvertFactor(this.convertFactor);
+        return dto;
+    }
 
-    @Transient
-    private String environment;
 }
