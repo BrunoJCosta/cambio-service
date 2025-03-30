@@ -1,8 +1,6 @@
 package br.com.cambio_service.cambio.service;
 
 import br.com.cambio_service.cambio.dto.CambioDTO;
-import jakarta.persistence.EntityManager;
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -11,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.math.BigDecimal;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 @SpringBootTest
@@ -42,6 +39,5 @@ class CambioServiceTest {
                 Arguments.of(amount, "USD", "MXN", new BigDecimal("141.05"))
         );
     }
-
 
 }
