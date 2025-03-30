@@ -14,7 +14,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/cambio-service")
+@RequestMapping("/cambio")
 @RequiredArgsConstructor
 public class CambioController {
 
