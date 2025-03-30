@@ -51,7 +51,7 @@ services:
     environment:
       DATA_BASE: db_cambio
       PORT_DB: 5432
-      PORT: 8001
+      PORT: 8002
       HOST_EUREKA: eureka
     networks:
       - ms
