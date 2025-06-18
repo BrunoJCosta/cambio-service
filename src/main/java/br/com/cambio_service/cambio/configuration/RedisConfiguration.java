@@ -24,10 +24,10 @@ public class RedisConfiguration {
         config.setDatabase(0);
 
         JedisPoolConfig poolConfig = new JedisPoolConfig();
-        poolConfig.setMaxTotal(8); // Max active connections
-        poolConfig.setMaxIdle(8); // Max idle connections
-        poolConfig.setMinIdle(0); // Min idle connections
-        poolConfig.setMaxWait(Duration.ofSeconds(30)); // Max wait time (ms)
+        poolConfig.setMaxTotal(4);
+        poolConfig.setMaxIdle(4);
+        poolConfig.setMinIdle(0);
+        poolConfig.setMaxWait(Duration.ofSeconds(30));
         return new JedisConnectionFactory(config);
     }
 
