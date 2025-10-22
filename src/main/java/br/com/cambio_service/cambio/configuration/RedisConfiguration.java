@@ -21,13 +21,14 @@ public class RedisConfiguration {
         RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
         config.setHostName("localhost");
         config.setPort(6379);
+        config.setPassword("bruno_application");
         config.setDatabase(0);
 
         JedisPoolConfig poolConfig = new JedisPoolConfig();
         poolConfig.setMaxTotal(4);
         poolConfig.setMaxIdle(4);
         poolConfig.setMinIdle(0);
-        poolConfig.setMaxWait(Duration.ofSeconds(30));
+        poolConfig.setMaxWait(Duration.ofMinutes(2));
         return new JedisConnectionFactory(config);
     }
 

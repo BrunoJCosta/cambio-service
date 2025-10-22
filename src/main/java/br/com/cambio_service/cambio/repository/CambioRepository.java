@@ -15,7 +15,7 @@ import static br.com.cambio_service.cambio.configuration.CacheName.CAMBIO_BY_FRO
 @Repository
 public interface CambioRepository extends JpaRepository<Cambio, Long> {
 
-    @Cacheable(CAMBIO_BY_FROM_AND_TO)
+    @Cacheable(value = CAMBIO_BY_FROM_AND_TO, key = "#from + ':' + #to")
     Optional<Cambio> findByFromAndTo(String from, String to);
 
     @Query("select c.to from Cambio c")
