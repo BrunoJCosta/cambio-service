@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -17,6 +18,9 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "cambio", schema = "cambio")
 public class Cambio implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = -9135131851038755387L;
 
     @Id
     @Column(name = "id")
