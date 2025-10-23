@@ -8,9 +8,6 @@ import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
-import redis.clients.jedis.JedisPoolConfig;
-
-import java.time.Duration;
 
 @Configuration
 @EnableCaching
@@ -24,11 +21,6 @@ public class RedisConfiguration {
         config.setPassword("bruno_application");
         config.setDatabase(0);
 
-        JedisPoolConfig poolConfig = new JedisPoolConfig();
-        poolConfig.setMaxTotal(4);
-        poolConfig.setMaxIdle(4);
-        poolConfig.setMinIdle(0);
-        poolConfig.setMaxWait(Duration.ofMinutes(2));
         return new JedisConnectionFactory(config);
     }
 
