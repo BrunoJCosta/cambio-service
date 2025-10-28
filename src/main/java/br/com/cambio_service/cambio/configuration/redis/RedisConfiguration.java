@@ -1,4 +1,4 @@
-package br.com.cambio_service.cambio.configuration;
+package br.com.cambio_service.cambio.configuration.redis;
 
 import org.springframework.boot.autoconfigure.cache.RedisCacheManagerBuilderCustomizer;
 import org.springframework.cache.annotation.EnableCaching;

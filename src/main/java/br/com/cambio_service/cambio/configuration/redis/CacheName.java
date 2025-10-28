@@ -1,4 +1,4 @@
-package br.com.cambio_service.cambio.configuration;
+package br.com.cambio_service.cambio.configuration.redis;
 
 import java.time.Duration;
 import java.util.List;

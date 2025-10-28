@@ -9,8 +9,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-import static br.com.cambio_service.cambio.configuration.CacheName.CAMBIO_ALL;
-import static br.com.cambio_service.cambio.configuration.CacheName.CAMBIO_BY_FROM_AND_TO;
+import static br.com.cambio_service.cambio.configuration.redis.CacheName.CAMBIO_ALL;
+import static br.com.cambio_service.cambio.configuration.redis.CacheName.CAMBIO_BY_FROM_AND_TO;
 
 @Repository
 public interface CambioRepository extends JpaRepository<Cambio, Long> {
