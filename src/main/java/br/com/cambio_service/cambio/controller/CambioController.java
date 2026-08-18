@@ -4,6 +4,7 @@ import br.com.cambio_service.cambio.dto.CambioDTO;
 import br.com.cambio_service.cambio.service.CambioService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ public class CambioController {
     private final CambioService service;
 
     @GetMapping("/{amount}/{from}/{to}")
+    @PreAuthorize("hasAuthority('cambio.read')")
     public CambioDTO getCambio(@PathVariable BigDecimal amount,
                             @PathVariable String from,
                             @PathVariable String to) {
@@ -29,6 +31,7 @@ public class CambioController {
     }
 
     @GetMapping("/currency")
+    @PreAuthorize("hasAuthority('cambio.read')")
     public List<String> getCurrency() {
         return service.findCurrentAll();
     }

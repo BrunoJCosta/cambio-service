@@ -1,51 +1,69 @@
 package br.com.cambio_service.cambio.configuration.authentication;
 
+import br.com.cambio_service.cambio.configuration.AssinaturaValidacao;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
-import org.apache.hc.client5.http.utils.Base64;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import javax.security.auth.login.CredentialException;
 import java.io.IOException;
-import java.util.Objects;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SignatureException;
+import java.util.List;
 
-@Component
+@Configuration
 public class CustomFilter extends OncePerRequestFilter {
 
-    private final static String USER = "bruno_cambio";
-    private final static String PASSWORD = "bruno_cambio_123";
-    public static final UsernameNotFoundException USERNAME_OR_PASSWORD_INVALID = new UsernameNotFoundException("username or password invalid");
+    private final JwtDecoder jwtDecoder;
+    private final AssinaturaValidacao assinaturaValidacao;
+
+    public CustomFilter(JwtDecoder jwtDecoder,
+                        AssinaturaValidacao assinaturaValidacao) {
+        this.jwtDecoder = jwtDecoder;
+        this.assinaturaValidacao = assinaturaValidacao;
+    }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String authorization = request.getHeader("Authorization");
-        String basic = "Basic ";
-        if (StringUtils.isNotBlank(authorization) && authorization.startsWith(basic)) {
-            String auth = authorization.replaceFirst(basic, "");
-            byte[] decode = new Base64().decode(auth);
-            UsernamePasswordAuthenticationToken userAuth = getUsernamePasswordAuthenticationToken(decode);
-            SecurityContextHolder.getContext().setAuthentication(userAuth);
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain filterChain) throws ServletException, IOException {
+        assinaturaValida(request);
+
+        String token = request.getHeader("Authorization-security");
+        if (StringUtils.isNotBlank(token)) {
+            Jwt decoded = jwtDecoder.decode(token);
+            List<GrantedAuthority> permissionProject = decoded.getClaimAsStringList("scope").stream()
+                    .<GrantedAuthority>map(SimpleGrantedAuthority::new)
+                    .toList();
+
+            UsernamePasswordAuthenticationToken authentication =
+                    new UsernamePasswordAuthenticationToken(decoded.getSubject(), null, permissionProject);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
         }
-        filterChain.doFilter(request,response);
+        filterChain.doFilter(request, response);
     }
 
-    private static UsernamePasswordAuthenticationToken getUsernamePasswordAuthenticationToken(byte[] decode) {
-        String usuarioSenha = new String(decode);
-        String[] split = usuarioSenha.strip().split(":");
-        if (split.length != 2)
-            throw USERNAME_OR_PASSWORD_INVALID;
-        String usuario = split[0];
-        String senha = split[1];
-        if (!Objects.equals(usuario, USER) || !Objects.equals(senha, PASSWORD))
-            throw USERNAME_OR_PASSWORD_INVALID;
-
-        return new UsernamePasswordAuthenticationToken(usuario, null, null);
+    private void assinaturaValida(HttpServletRequest request) {
+        try {
+            String assinatura = request.getHeader("X-Signature");
+            boolean assinaturaValida = assinaturaValidacao.valido(assinatura);
+            if (!assinaturaValida) {
+                throw new CredentialException("Invalid Credentials!");
+            }
+        } catch (CredentialException | SignatureException | InvalidKeyException | NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
     }
+
 }
