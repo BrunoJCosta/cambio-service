@@ -22,7 +22,7 @@ public class CambioController {
     private final CambioService service;
 
     @GetMapping("/{amount}/{from}/{to}")
-    @PreAuthorize("hasAuthority('cambio.read')")
+    @PreAuthorize("hasAuthority('service.cambio.read')")
     public CambioDTO getCambio(@PathVariable BigDecimal amount,
                             @PathVariable String from,
                             @PathVariable String to) {
@@ -31,7 +31,7 @@ public class CambioController {
     }
 
     @GetMapping("/currency")
-    @PreAuthorize("hasAuthority('cambio.read')")
+    @PreAuthorize("hasAuthority('service.cambio.read')")
     public List<String> getCurrency() {
         return service.findCurrentAll();
     }
