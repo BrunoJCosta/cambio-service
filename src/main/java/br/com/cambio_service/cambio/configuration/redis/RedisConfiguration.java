@@ -1,5 +1,6 @@
 package br.com.cambio_service.cambio.configuration.redis;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.cache.RedisCacheManagerBuilderCustomizer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
@@ -15,11 +16,17 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 @Profile("!test")
 public class RedisConfiguration {
 
+    @Value("${REDIS}")
+    private String hostName;
+
+    @Value("${REDIS_PORT}")
+    private Integer port;
+
     @Bean
     public JedisConnectionFactory redisConnectionFactory() {
         RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
-        config.setHostName("localhost");
-        config.setPort(6379);
+        config.setHostName(hostName);
+        config.setPort(port);
         config.setPassword("bruno_application");
         config.setDatabase(0);
 
