@@ -35,3 +35,13 @@ spring:
   batch:
     jdbc:
       initialize-schema: always
+
+  data:
+    redis:
+      host: localhost_teste
+      port: 6380
+
+security:
+  jwt:
+    public-key: classpath:keys/public.pem
+    secret: '43209wker9032wk49r02390kr'

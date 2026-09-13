@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import java.util.stream.Stream;
 
 @SpringBootTest
+@ActiveProfiles("test")
 class CambioServiceTest {
 
     @Autowired
