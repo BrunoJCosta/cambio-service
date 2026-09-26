@@ -7,11 +7,11 @@ networks:
 services:
   db:
     container_name: db_cambio
-    image: postgres:14.0-alpine
+    image: postgres:17
     restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: ${CAMBIO_USER_DB}
+      POSTGRES_PASSWORD: ${CAMBIO_PASSWORD_DB}
       POSTGRES_DB: cambio_server
     ports:
       - "5003:5432"
@@ -28,7 +28,8 @@ services:
     expose:
       - 8001
     environment:
-      DATA_BASE: db_cambio
+      USER_DB: ${CAMBIO_USER_DB}
+      PASSWORD_DB: ${CAMBIO_PASSWORD_DB}
       PORT_DB: 5432
       PORT: 8001
       HOST_EUREKA: eureka
@@ -51,7 +52,8 @@ services:
     expose:
       - 8002
     environment:
-      DATA_BASE: db_cambio
+      USER_DB: ${CAMBIO_USER_DB}
+      PASSWORD_DB: ${CAMBIO_PASSWORD_DB}
       PORT_DB: 5432
       PORT: 8002
       HOST_EUREKA: eureka

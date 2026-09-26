@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Entity
-@Table(name = "cambio", schema = "cambio")
+@Table(name = "cambio", schema = "cambio_server")
 public class Cambio implements Serializable {
 
     @Serial

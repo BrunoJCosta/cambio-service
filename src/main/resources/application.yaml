@@ -11,15 +11,15 @@ spring:
     name: cambio-service
 
   datasource:
-    url: jdbc:postgresql://${DATA_BASE}:${PORT_DB}/cambio_server
-    username: postgres
-    password: postgres
+    url: jdbc:postgresql://ep-floral-pond-b4t0xtf4-pooler.c-6.us-east-2.aws.neon.tech?sslmode=require&channelBinding=require
+    username: ${USER_DB}
+    password: ${PASSWORD_DB}
 
   flyway:
-    url: jdbc:postgresql://${DATA_BASE}:${PORT_DB}/cambio_server
-    schemas: cambio
-    user: postgres
-    password: postgres
+    url: jdbc:postgresql://ep-floral-pond-b4t0xtf4-pooler.c-6.us-east-2.aws.neon.tech/cambio?sslmode=require&channelBinding=require
+    schemas: cambio_server
+    user: ${USER_DB}
+    password: ${PASSWORD_DB}
 
   sql:
     init:
