@@ -5,18 +5,6 @@ networks:
     external: true
 
 services:
-  db:
-    container_name: db_cambio
-    image: postgres:17
-    restart: always
-    environment:
-      POSTGRES_USER: ${CAMBIO_USER_DB}
-      POSTGRES_PASSWORD: ${CAMBIO_PASSWORD_DB}
-      POSTGRES_DB: cambio_server
-    ports:
-      - "5003:5432"
-    networks:
-      - ms
 
   back_1:
     build:
@@ -38,9 +26,6 @@ services:
       SECRET: cambio-ms-rotas-madri
     networks:
       - ms
-    depends_on:
-      db:
-        condition: service_started
 
   back_2:
     build:
@@ -62,6 +47,3 @@ services:
       SECRET: cambio-ms-rotas-madri
     networks:
       - ms
-    depends_on:
-      db:
-        condition: service_started
