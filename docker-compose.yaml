@@ -5,7 +5,6 @@ networks:
     external: true
 
 services:
-
   back_1:
     build:
       context: .
@@ -16,9 +15,9 @@ services:
     expose:
       - 8001
     environment:
-      USER_DB: ${CAMBIO_USER_DB}
-      PASSWORD_DB: ${CAMBIO_PASSWORD_DB}
-      PORT_DB: 5432
+      HOST_DB: ${HOST_DB}
+      USER_DB: ${USER_DB}
+      PASSWORD_DB: ${PASSWORD_DB}
       PORT: 8001
       HOST_EUREKA: eureka
       REDIS: redis
@@ -37,9 +36,9 @@ services:
     expose:
       - 8002
     environment:
-      USER_DB: ${CAMBIO_USER_DB}
-      PASSWORD_DB: ${CAMBIO_PASSWORD_DB}
-      PORT_DB: 5432
+      HOST_DB: ${HOST_DB}
+      USER_DB: ${USER_DB}
+      PASSWORD_DB: ${PASSWORD_DB}
       PORT: 8002
       HOST_EUREKA: eureka
       REDIS: redis
