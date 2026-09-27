@@ -22,7 +22,7 @@ services:
       HOST_EUREKA: eureka
       REDIS: redis
       REDIS_PORT: 6379
-      SECRET: cambio-ms-rotas-madri
+      SECRET: ${SECRET}
     networks:
       - ms
 
@@ -43,6 +43,6 @@ services:
       HOST_EUREKA: eureka
       REDIS: redis
       REDIS_PORT: 6379
-      SECRET: cambio-ms-rotas-madri
+      SECRET: ${SECRET}
     networks:
       - ms
